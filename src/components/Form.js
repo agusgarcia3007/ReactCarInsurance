@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { getYearDifference, calculateByBrand, calculateCoverage } from '../helper';
 
 const Field = styled.div`
     display:flex;
@@ -44,27 +45,70 @@ const Button =styled.button`
         transition:all 0.2s;
     }
 `
+const Error = styled.div`
+    background-color: #f8d7da;
+    color:#842029;
+    border:solid 2px #842029;
+    border-radius: .25rem;
+    padding:1rem;
+    width:100%;
+    text-align:center;
+    margin-bottom:2rem;
+`
 
 const Form = () => {
 
     const [data, setData] = useState({
         brand:'',
         year:'',
-        coverage:''
+        coverage:'',
+        error:false
     });
 
-    const {brand, year, coverage} = data;
+    const {brand, year, coverage, error} = data;
 
 
     const getInfo = e => {
         setData({
             ...data,
-            [e.target.name]:e.target.value
+            [e.target.name] : e.target.value
         })
     }
 
+    const handleSubmit = e =>{
+        e.preventDefault();
+
+        //validate info
+        if(brand ==='' || year ===''  || coverage === ''){
+            setData({error:true});
+            return;
+           }
+           setData({error:false});
+
+        //get year difference
+        let quote = 2000;
+
+        const difference = getYearDifference(year);
+
+        //each year substract 3%
+        if(difference){
+            quote -= (( difference * 3 ) * quote) / 100;
+        }
+
+
+        quote = calculateByBrand(brand) * quote;
+
+        const increaseByCoverage = calculateCoverage(coverage);
+
+        console.log(increaseByCoverage);
+    }
+
     return ( 
-        <form>
+        <form
+            onSubmit={handleSubmit}
+        >
+        {error ? <Error>All fields are required</Error> : null}
+        
             <Field>
                 <Label>Brand</Label>
                 <Select
@@ -117,7 +161,7 @@ const Form = () => {
                 />Premium
             </Field>
 
-            <Button type='button'>Get a Quote</Button>
+            <Button type='submit'>Get a Quote</Button>
         </form>
      );
 }
