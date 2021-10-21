@@ -56,7 +56,7 @@ const Error = styled.div`
     margin-bottom:2rem;
 `
 
-const Form = () => {
+const Form = ({setSummary}) => {
 
     const [data, setData] = useState({
         brand:'',
@@ -82,7 +82,7 @@ const Form = () => {
         if(brand ==='' || year ===''  || coverage === ''){
             setData({error:true});
             return;
-           }
+        }
            setData({error:false});
 
         //get year difference
@@ -91,16 +91,22 @@ const Form = () => {
         const difference = getYearDifference(year);
 
         //each year substract 3%
-        if(difference){
-            quote -= (( difference * 3 ) * quote) / 100;
-        }
+        quote -= (( difference * 3 ) * quote) / 100;
 
-
+        //calculate brand price
         quote = calculateByBrand(brand) * quote;
 
+        //premium or basic coverage
         const increaseByCoverage = calculateCoverage(coverage);
 
-        console.log(increaseByCoverage);
+        //get a price
+        quote = parseFloat(increaseByCoverage * quote).toFixed(2);
+
+        setSummary({
+            quote:quote,
+            data
+        })
+        
     }
 
     return ( 
