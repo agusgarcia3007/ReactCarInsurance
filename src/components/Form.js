@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 const Field = styled.div`
@@ -6,11 +6,9 @@ const Field = styled.div`
     margin-bottom:1rem;
     align-items: center;
 `;
-
 const Label = styled.label`
     flex: 0 0 100px;
 `
-
 const Select = styled.select`
     display:block;
     background-color: #1C538E;
@@ -25,11 +23,9 @@ const Select = styled.select`
     outline: none;
     width: 100%;
 `
-
 const InputRadio = styled.input`
     margin: 0 1rem;
 `
-
 const Button =styled.button`
     background-color:#1C538E;
     font-size:16px;
@@ -50,11 +46,32 @@ const Button =styled.button`
 `
 
 const Form = () => {
+
+    const [data, setData] = useState({
+        brand:'',
+        year:'',
+        coverage:''
+    });
+
+    const {brand, year, coverage} = data;
+
+
+    const getInfo = e => {
+        setData({
+            ...data,
+            [e.target.name]:e.target.value
+        })
+    }
+
     return ( 
         <form>
             <Field>
                 <Label>Brand</Label>
-                <Select>
+                <Select
+                    name='brand'
+                    value={brand}
+                    onChange={getInfo}
+                >
                     <option value="">--Select--</option>
                     <option value="american">American</option>
                     <option value="european">European</option>
@@ -64,7 +81,11 @@ const Form = () => {
 
             <Field>
                 <Label>Year</Label>
-                <Select>
+                <Select
+                    name='year'
+                    value={year}
+                    onChange={getInfo}
+                >
                     <option value="">--Select--</option>
                     <option value="2021">2021</option>
                     <option value="2020">2020</option>
@@ -83,12 +104,16 @@ const Form = () => {
                 <InputRadio
                     type="radio" 
                     name="coverage" 
-                    value='Basic'
+                    value='basic'
+                    checked={coverage === 'basic'}
+                    onChange={getInfo}
                 />Basic
                 <InputRadio
                     type="radio" 
                     name="coverage" 
-                    value='Premium'
+                    value='premium'
+                    checked={coverage === 'premium'}
+                    onChange={getInfo}
                 />Premium
             </Field>
 
