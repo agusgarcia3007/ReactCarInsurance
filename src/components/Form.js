@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { getYearDifference, calculateByBrand, calculateCoverage } from '../helper';
 
@@ -103,7 +104,7 @@ const Form = ({setSummary}) => {
         quote = parseFloat(increaseByCoverage * quote).toFixed(2);
 
         setSummary({
-            quote:quote,
+            quote:Number(quote),
             data
         })
         
@@ -170,6 +171,10 @@ const Form = ({setSummary}) => {
             <Button type='submit'>Get a Quote</Button>
         </form>
      );
+}
+
+Form.propTypes = {
+    setSummary: PropTypes.func.isRequired
 }
  
 export default Form;

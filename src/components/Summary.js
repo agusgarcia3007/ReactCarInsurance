@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
 const QuoteContainer = styled.div `
     padding:1rem;
@@ -25,6 +26,10 @@ const Summary = ({data}) => {
             </ul>
         </QuoteContainer>
      );
+}
+
+Summary.propTypes = {
+    data:PropTypes.object.isRequired
 }
  
 export default Summary;

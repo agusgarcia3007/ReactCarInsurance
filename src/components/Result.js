@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
 const Message = styled.p `
     background-color: #1c538a;
@@ -26,6 +27,10 @@ const Result = ({quote}) => {
         <Message>Choose brand, year and your coverage</Message> : 
         <Quote>Your Quote is: ${quote}</Quote>  
     )
+}
+
+Result.propTypes = {
+    quote:PropTypes.number
 }
  
 export default Result;
