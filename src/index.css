@@ -8,20 +8,20 @@ body {
 }
 ul {
   list-style: none;
-  padding: none;
-  margin: none;
+  padding:0;
+  margin:0;
 }
-span.resultado {
+span.quote {
   position: relative;
   width: 100%;
 }
-.resultado-enter {
+.quote-enter {
   transition: .5s;
 }
-.resultado-enter.resultado-enter-active{
+.quote-enter.quote-enter-active{
   transform: translateY(0%);
 }
-.resultado-exit{
+.quote-exit{
   transform: translateY(0);
   transition: .5s;
   position : absolute;
@@ -29,7 +29,7 @@ span.resultado {
   bottom : 0;
   right: 0;
 }
-.resultado-exit-active{
+.quote-exit-active{
   opacity: 0;
   transform: translateY(-10%);
 }
